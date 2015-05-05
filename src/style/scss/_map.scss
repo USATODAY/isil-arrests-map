@@ -1,0 +1,25 @@
+body { margin:0; padding:0; }
+
+#map {
+    @include BoxShadowHelper(1);
+    height: 600px;
+    max-height: 75%;
+    width:100%; 
+
+    @media(max-width: 800px) {
+        height: 400px;
+        margin: 0 auto;
+        width: 90%;
+    }
+}
+
+.leaflet-popup-content {
+    // width: 100% !important;
+}
+
+// .leaflet-popup-content-wrapper { width: 660px;}
+
+.map-img {
+    width: 100%;
+}
+
