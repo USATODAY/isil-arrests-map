@@ -297,17 +297,17 @@ module.exports = function(grunt) {
       },
       upload1: {
         files: {
-          '/17200/experiments/usatoday/2015/05/isis-arrests/': 'js/main.js'
+          '/17200/experiments/usatoday/2015/05/isil-arrests/': 'js/main.js'
         }
       },
       upload2: {
         files: {
-          '/17200/experiments/usatoday/2015/05/isis-arrests/': 'style/project.css'
+          '/17200/experiments/usatoday/2015/05/isil-arrests/': 'style/project.css'
         }
       },
       upload3: {
         files: {
-          '/17200/experiments/usatoday/2015/05/isis-arrests/': 'data/*.json'
+          '/17200/experiments/usatoday/2015/05/isil-arrests/': 'data/*.json'
         }
       }
     },

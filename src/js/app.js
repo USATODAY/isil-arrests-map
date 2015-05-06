@@ -27,9 +27,9 @@ define(
             var strURL;
 
             if (hostname != "www.gannett-cdn.com") {
-                strURL = "http://" + hostname + "/services/webproxy/?url=" + "http://www.gannett-cdn.com/experiments/usatoday/2015/05/broadway/data/data.json";
+                strURL = "http://" + hostname + "/services/webproxy/?url=" + "http://www.gannett-cdn.com/experiments/usatoday/2015/05/isil-arrests/data/data.json";
             } else {
-                strURL = "http://www.gannett-cdn.com/experiments/usatoday/2015/05/broadway/data/data.json";
+                strURL = "http://www.gannett-cdn.com/experiments/usatoday/2015/05/isil-arrests/data/data.json";
             }
 
             if (hostname != "localhost") {
@@ -40,6 +40,7 @@ define(
                 });
             } else {
                 jQuery.getJSON('/data/data.json', function (data) {
+                    console.log(data);
                     app.objData = data[0];
                     app.render();
                     app.setupMap();
@@ -48,7 +49,7 @@ define(
         };
 
         app.render = function() {
-            $('.iapp-page-wrap').html(templates['app.html']({head: app.objData.project_head, chatter: app.objData.chatter}));
+            $('.iapp-page-wrap').html(templates['app.html']({head: app.objData.project_head, chatter: app.objData.chatter, note: app.objData.note, source: app.objData.source, credits: app.objData.credits}));
             $('.iapp-share-wrap').html(templates['share.html'](app.createShare(app.objData.project_share)));
             // $('.iapp-key-wrap').html(templates['key.html']());
             $detailPanel = $(".iapp-detail-panel");

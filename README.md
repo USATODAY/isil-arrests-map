@@ -1,4 +1,4 @@
-#isis-arrests
+#isil-arrests
 
 The best project ever.
 
@@ -22,5 +22,3 @@ and install Bower with
 Once those dependencies are set up, from this repository run `npm install`, then run `grunt`
 
 
-###Live version:
-http://www.gannett-cdn.com/experiments/usatoday/2015/05/isis-arrests/

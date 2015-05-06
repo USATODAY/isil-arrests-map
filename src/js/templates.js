@@ -10,7 +10,13 @@ __p += '<div class="iapp-main-panel">\n<!-- PROJECT HEAD -->\n<div class="iapp-h
 ((__t = ( head )) == null ? '' : __t) +
 '</h2>\n    <p class="iapp-page-chatter">' +
 ((__t = ( chatter )) == null ? '' : __t) +
-'</p>\n    <div class="iapp-share-wrap"></div>\n    <div class="iapp-key-wrap"></div>\n</div>\n\n\n<!-- MAIN CONTENT -->\n<div class=\'main-content-wrap\'>\n\n    <div id=\'map\'></div>\n\n</div>\n\n\n<!-- FOOTER -->\n<div class=\'iapp-footer-wrap cf\'>\n    <!-- CREDITS LIST  -->\n</div>\n</div>\n\n<div class="iapp-panel iapp-detail-panel hide"></div>\n\n\n';
+'</p>\n    <p class="iapp-page-info">' +
+((__t = ( note )) == null ? '' : __t) +
+'</p>\n    <p class="iapp-page-info">' +
+((__t = ( source )) == null ? '' : __t) +
+'</p>\n    <div class="iapp-share-wrap"></div>\n    <div class="iapp-key-wrap"></div>\n</div>\n\n\n<!-- MAIN CONTENT -->\n<div class=\'main-content-wrap\'>\n\n    <div id=\'map\'></div>\n\n</div>\n\n\n<!-- FOOTER -->\n<div class=\'iapp-footer-wrap cf\'>\n    <!-- CREDITS LIST  -->\n    <h6 class="iapp-credit-list">' +
+((__t = ( credits )) == null ? '' : __t) +
+'</h6>\n</div>\n</div>\n\n<div class="iapp-panel iapp-detail-panel hide"></div>\n\n\n';
 
 }
 return __p
