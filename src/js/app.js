@@ -62,9 +62,13 @@ define(
             jQuery(".js-head").html(app.objData.project_head);
             jQuery(".js-chatter").html(app.objData.chatter);
             L.mapbox.accessToken = 'pk.eyJ1IjoiZGdhaW5lciIsImEiOiJyWkE2bndZIn0.dMIRp-JYsg6ZJRKsMu9-nA';
+            var zoomLevel = 4;
+            if (config.isMobile) {
+                zoomLevel = 3;
+            }
             var map = L.mapbox.map('map', 'usatodaygraphics.basemap', {
                 maxZoom: 8
-            }).setView([39.50, -98.35], 4);
+            }).setView([39.50, -98.35], zoomLevel);
 
             L.control.scale().addTo(map);
 
