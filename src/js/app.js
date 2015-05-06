@@ -34,7 +34,8 @@ define(
 
             if (hostname != "localhost") {
                 jQuery.getJSON(strURL, function (data) { //"http://" + hostname + "/services/webproxy/?url=" + strURL, function (data)
-                    app.objData = data;
+                    console.log(data);
+                    app.objData = data[0];
                     app.render();
                     app.setupMap();
                 });
@@ -51,7 +52,6 @@ define(
         app.render = function() {
             $('.iapp-page-wrap').html(templates['app.html']({head: app.objData.project_head, chatter: app.objData.chatter, note: app.objData.note, source: app.objData.source, credits: app.objData.credits}));
             $('.iapp-share-wrap').html(templates['share.html'](app.createShare(app.objData.project_share)));
-            // $('.iapp-key-wrap').html(templates['key.html']());
             $detailPanel = $(".iapp-detail-panel");
 
             $(".social-popup").click(app.socialClick);
