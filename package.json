@@ -1,6 +1,6 @@
 {
-  "name": "isis-arrests",
-  "description": "Map of ISIS arrests",
+  "name": "isil-arrests",
+  "description": "Map of ISIL arrests",
   "version": "0.1.0",
   "author": {
     "name": "mitchthorson",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/USATODAY/isis-arrests.git"
+    "url": "git://github.com/USATODAY/isil-arrests.git"
   },
   "scripts": {
     "postinstall": "bower cache clean && bower install"

@@ -23,3 +23,8 @@ body { margin:0; padding:0; }
     width: 100%;
 }
 
+.leaflet-popup-content hr {
+    border: 0;
+    height: 1px;
+    background: $light-grey;
+}

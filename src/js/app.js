@@ -40,7 +40,7 @@ define(
                 });
             } else {
                 jQuery.getJSON('/data/data.json', function (data) {
-                    app.objData = data;
+                    app.objData = data[0];
                     app.render();
                     app.setupMap();
                });
@@ -48,8 +48,8 @@ define(
         };
 
         app.render = function() {
-            $('.iapp-page-wrap').html(templates['app.html']({head: app.objData[0].project_head, chatter: app.objData[0].chatter}));
-            $('.iapp-share-wrap').html(templates['share.html'](app.createShare(app.objData[0].project_share)));
+            $('.iapp-page-wrap').html(templates['app.html']({head: app.objData.project_head, chatter: app.objData.chatter}));
+            $('.iapp-share-wrap').html(templates['share.html'](app.createShare(app.objData.project_share)));
             // $('.iapp-key-wrap').html(templates['key.html']());
             $detailPanel = $(".iapp-detail-panel");
 
@@ -58,8 +58,8 @@ define(
 
         app.setupMap = function () {
             var strImageBase = "http://www.gannett-cdn.com/experiments/usatoday/2015/05/broadway/images/";
-            jQuery(".js-head").html(app.objData[0].project_head);
-            jQuery(".js-chatter").html(app.objData[0].chatter);
+            jQuery(".js-head").html(app.objData.project_head);
+            jQuery(".js-chatter").html(app.objData.chatter);
             L.mapbox.accessToken = 'pk.eyJ1IjoiZGdhaW5lciIsImEiOiJyWkE2bndZIn0.dMIRp-JYsg6ZJRKsMu9-nA';
             var map = L.mapbox.map('map', 'usatodaygraphics.basemap', {
                 maxZoom: 8
@@ -68,26 +68,25 @@ define(
             L.control.scale().addTo(map);
 
             var geoJson = {};
+            geoJson.type = "FeatureCollection";
             geoJson.features = [];
-            jQuery.each(app.objData[0].restaurants, function(index){
+            jQuery.each(app.objData.cities, function(index){
+                var dataObj = app.objData.cities[index];
+                console.log(dataObj.city_geocode);
                 var feature = {};
                 feature.type = "Feature";
                 feature.properties = {};
-                feature.properties.title = app.objData[0].restaurants[index].name;
-                feature.properties.location_type = "restaurant";
+                feature.properties.title = dataObj.city_geocode;
+                feature.properties.description = dataObj.city_geocode;
+                feature.properties.arrests = dataObj.arrests;
+                feature.properties.location_type = "city";
                 feature.properties["marker-color"] = "#1B9CFA";
                 feature.properties["marker-size"] = "medium";
-                // feature.properties["marker-symbol"] = "restaurant";
-                if (app.objData[0].restaurants[index].image !== "") {
-                    feature.properties.image = "<img src=\"" + strImageBase + app.objData[0].restaurants[index].image + " class='map-img'/> <h2>" + app.objData[0].restaurants[index].name + "</h2><p><span class=\"subhead\">Description:</span> " + app.objData[0].restaurants[index].description + "</p><p><span class=\"subhead\">Info:</span> " + app.objData[0].restaurants[index].website + "<br>" + app.objData[0].restaurants[index].address_geocode;
-                } else {
-                    feature.properties.image = "<img src=\"" + strImageBase + "na.jpg\" class='map-img' /> <h2>" + app.objData[0].restaurants[index].name + "</h2><p><span class=\"subhead\">Description:</span> " + app.objData[0].restaurants[index].description + "</p><p><span class=\"subhead\">Info:</span> " + app.objData[0].restaurants[index].website + "<br>" + app.objData[0].restaurants[index].address_geocode;
-                }
                 feature.geometry = {};
                 feature.geometry.type = "Point";
                 feature.geometry.coordinates = [];
-                feature.geometry.coordinates[0] = app.objData[0].restaurants[index].longitude;
-                feature.geometry.coordinates[1] = app.objData[0].restaurants[index].latitude;
+                feature.geometry.coordinates[0] = dataObj.longitude;
+                feature.geometry.coordinates[1] = dataObj.latitude;
                 geoJson.features.push(feature);
             });
 
@@ -99,7 +98,11 @@ define(
                     feature = marker.feature;
 
                 // Create custom popup content from the GeoJSON property 'video'
-                var popupContent = feature.properties.image;
+                var popupContent = "";
+                _.each(feature.properties.arrests, function(arrest) {
+                    var arrestHTML = templates["mapPopup.html"](arrest);
+                    popupContent += arrestHTML;
+                });
 
                 //set icon
                 if (feature.properties.icon !== undefined) {
@@ -114,14 +117,8 @@ define(
 
                 // bind the popup to the marker http://leafletjs.com/reference.html#popup
                 
-                if (config.isMobile) {
-                    marker.addEventListener("click", app.handleClick);
-                } else {
-                    marker.bindPopup(popupContent, {
-                        closeButton: true,
-                        minWidth: popupWidth
-                    });
-                }
+                marker.addEventListener("click", app.handleClick);
+                marker.bindPopup(feature.properties.title);
             });
 
 // Add features to the map
@@ -130,23 +127,11 @@ define(
 
         app.handleClick = function(e) {
             var props = e.target.feature.properties;
-            var entry;
-            switch (props.location_type) {
-                case "restaurant":
-                    entry = _.findWhere(app.objData[0].restaurants, {"name": props.title});
-                    $detailPanel.html(templates["details.html"](entry));
-                    break;
-                case "hotel":
-                    entry = _.findWhere(app.objData[0].hotels, {"name": props.title});
-                    $detailPanel.html(templates["details.html"](entry));
-                    break;
-                case "theater":
-                    entry = _.findWhere(app.objData[0].theaters, {"name": props.title});
-                    $detailPanel.html(templates["theaterdetails.html"](entry));
-                    break;
-            }
+            var entry = _.findWhere(app.objData.cities, {"city_geocode": props.title});
+            $detailPanel.html(templates["details.html"](entry));
 
             $detailPanel.addClass("iapp-show");
+            $('.iapp-main-panel').addClass('iapp-slide');
             $('.iapp-detail-close-button').click(function() {
                 app.closeDetails();
             });
@@ -155,6 +140,7 @@ define(
 
         app.closeDetails = function() {
             $detailPanel.removeClass("iapp-show");
+            $('.iapp-main-panel').removeClass('iapp-slide');
         };
 
         app.createShare = function(shareString) {

@@ -1,15 +1,15 @@
 <div class="iapp-detail-wrap">
     <div class="iapp-detail-close-button"><img src="http://www.gannett-cdn.com/experiments/usatoday/2015/05/broadway/images/close-icon-grey.svg" alt="close" /></div>
+    <% _.each(arrests, function(arrest) { %>
+    <div class="iapp-detail-entry-wrap">
+        <h3 class="iapp-detail-title"><%= arrest.person %></h3>
+        <p class="iapp-detail-description"><%= arrest.city %></p>
+        <p class="iapp-detail-info"><%= arrest.status %> </p>
+        <p class="iapp-detail-info"><%= arrest.details %> </p>
+    </div>
+    <% }) %>
     <div class="iapp-detail-image-wrap">
-        <% if (image !== "") { %>
-        <img class="iapp-detail-image" src="http://www.gannett-cdn.com/experiments/usatoday/2015/05/broadway/images/<%= image %>" alt="">
-            <% } else {%>
-            <img class="iapp-detail-image" src="http://www.gannett-cdn.com/experiments/usatoday/2015/05/broadway/images/na.jpg" alt="">
-            <% } %>
+        <img class="iapp-detail-image" src="http://api.tiles.mapbox.com/v4/usatodaygraphics.basemap/pin-m+1B9CFA(<%=longitude%>,<%=latitude%>)/<%=longitude%>,<%=latitude%>,7/500x300.png?access_token=pk.eyJ1IjoiZGdhaW5lciIsImEiOiJyWkE2bndZIn0.dMIRp-JYsg6ZJRKsMu9-nA" alt="">
     </div>
 
-    <h3 class="iapp-detail-title"><%= name %></h3>
-    <p class="iapp-detail-description"><%= description %></p>
-    <p class="iapp-detail-info"><%= address_geocode %> </p>
-    <p class="iapp-detail-info"><a href="<%=website%>" target="_blank"> website</a></p>
 </div>
