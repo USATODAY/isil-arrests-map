@@ -67,10 +67,12 @@ define(
                 zoomLevel = 3;
             }
             var map = L.mapbox.map('map', 'usatodaygraphics.basemap', {
-                maxZoom: 8
+                maxZoom: 8,
+                zoomControl: false
             }).setView([39.50, -98.35], zoomLevel);
 
-            L.control.scale().addTo(map);
+            // L.control.scale().addTo(map);
+            new L.Control.Zoom({ position: 'topright' }).addTo(map);
 
             var geoJson = {};
             geoJson.type = "FeatureCollection";
